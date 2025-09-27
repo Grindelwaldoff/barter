@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+<h1 class="h5 mb-3">Вход</h1>
+<form method="post" class="card card-body">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label class="form-label" for="id_username">Логин</label>
+    <input type="text" name="username" autofocus required class="form-control" id="id_username">
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="id_password">Пароль</label>
+    <input type="password" name="password" required class="form-control" id="id_password">
+  </div>
+  <button type="submit" class="btn btn-primary">Войти</button>
+</form>
+{% endblock %}

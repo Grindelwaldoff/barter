@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="h5">Новое предложение</h1>
+<form method="post" class="card card-body p-4 gap-3">
+    {% csrf_token %}
+    {% include "components/form_fields.html" with form=form %}
+    <div>
+        <button class="btn btn-primary">Отправить</button>
+    </div>
+</form>
+{% endblock %}

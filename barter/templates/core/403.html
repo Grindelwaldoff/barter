@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}403 — Доступ запрещён{% endblock %}
+{% block content %}
+  <h1>Доступ запрещён</h1>
+  <p>{{ exception }}</p>
+  <a href="{% url 'ads:list' %}">Вернуться на главную</a>
+{% endblock %}

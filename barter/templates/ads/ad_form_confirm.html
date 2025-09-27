@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Подтвердите объявление{% endblock %}
+{% block content %}
+<h1 class="h5">Подтвердите объявление</h1>
+<div class="card mb-3">
+  <div class="card-body">
+    <h2 class="h6 mb-2">{{ preview.title }}</h2>
+    {% if preview.image_url %}
+    <div class="mb-2">
+      <img src="{{ preview.image_url }}" alt="{{ preview.title }}" class="img-fluid rounded">
+    </div>
+    {% endif %}
+    {% if preview.description %}
+    <p class="mb-3">{{ preview.description|linebreaksbr }}</p>
+    {% endif %}
+    <dl class="row small mb-0">
+      <dt class="col-sm-4">Категория</dt>
+      <dd class="col-sm-8">{{ preview.category }}</dd>
+      <dt class="col-sm-4">Состояние</dt>
+      <dd class="col-sm-8">{{ preview.get_condition_display }}</dd>
+    </dl>
+  </div>
+</div>
+<form method="post" class="d-flex gap-2">
+  {% csrf_token %}
+  {% for field in form %}
+    {{ field.as_hidden }}
+  {% endfor %}
+  <input type="hidden" name="confirm" value="yes">
+  <button type="submit" class="btn btn-primary">Подтвердить</button>
+  <button type="submit" name="edit" value="1" class="btn btn-outline-secondary">Изменить</button>
+</form>
+{% endblock %}

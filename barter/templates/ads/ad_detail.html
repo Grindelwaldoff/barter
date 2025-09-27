@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ object.title }}{% endblock %}
+{% block content %}
+<article class="card">
+  {% if object.image_url %}<img src="{{ object.image_url }}" class="card-img-top" alt="">{% endif %}
+  <div class="card-body">
+    <h1 class="h4">{{ object.title }}</h1>
+    <div class="small text-muted mb-2">{{ object.category }} • {{ object.get_condition_display }} • {{ object.created_at|date:"d.m.Y H:i" }}</div>
+    <p>{{ object.description|linebreaks }}</p>
+    {% if user.is_authenticated and user == object.user %}
+      <a class="btn btn-outline-secondary" href="{% url 'ads:edit' object.pk %}">Редактировать</a>
+      <a class="btn btn-outline-danger" href="{% url 'ads:delete' object.pk %}">Удалить</a>
+    {% endif %}
+  </div>
+</article>
+
+{% if user.is_authenticated and user != object.user %}
+<hr>
+<h2 class="h6">Предложить обмен</h2>
+<form method="post" action="{% url 'ads:proposal_create' %}">
+  {% csrf_token %}
+  <input type="hidden" name="ad_receiver" value="{{ object.pk }}">
+  <div class="mb-2">
+    <label class="form-label">Моё объявление (что отдаю)</label>
+    <select name="ad_sender" class="form-select">
+      {% for user_ad in user.ads.all %}
+        <option value="{{ user_ad.pk }}">{{ user_ad.title }}</option>
+      {% empty %}
+        <option disabled>У вас нет объявлений</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-2"><textarea class="form-control" name="comment" placeholder="Комментарий"></textarea></div>
+  <button class="btn btn-primary">Отправить</button>
+</form>
+{% endif %}
+{% endblock %}

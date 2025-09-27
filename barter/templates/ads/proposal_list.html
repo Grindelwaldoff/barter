@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="h5">Мои обмены</h1>
+<form class="row g-2 mb-3" method="get">
+  <div class="col-sm-4">
+    <select class="form-select" name="who">
+      <option value="">Все</option>
+      <option value="sender" {% if request.GET.who == "sender" %}selected{% endif %}>Я отправил</option>
+      <option value="receiver" {% if request.GET.who == "receiver" %}selected{% endif %}>Мне прислали</option>
+    </select>
+  </div>
+  <div class="col-sm-4">
+    <select class="form-select" name="status">
+      <option value="">Любой статус</option>
+      {% for value, label in status_choices %}
+      <option value="{{ value }}" {% if request.GET.status == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-sm-4"><button class="btn btn-primary w-100">Фильтр</button></div>
+</form>
+
+<ul class="list-group">
+{% for proposal in object_list %}
+<li class="list-group-item">
+    <div class="small text-muted">
+      {{ proposal.created_at|date:"d.m.Y H:i" }} • статус: {{ proposal.get_status_display }}
+    </div>
+    <div>Обмен: <a href="{% url 'ads:detail' proposal.ad_sender.pk %}">{{ proposal.ad_sender.title }}</a></div>
+    <div>На: <a href="{% url 'ads:detail' proposal.ad_receiver.pk %}">{{ proposal.ad_receiver.title }}</a></div>
+    {% if proposal.comment %}
+      <div class="mt-1">{{ proposal.comment|linebreaksbr }}</div>
+    {% endif %}
+
+    {% if proposal.actions %}
+      <div class="mt-2 d-flex gap-2">
+        {% for action in proposal.actions %}
+        <form method="post" action="{% url 'ads:proposal_action' proposal.pk action.name %}">{% csrf_token %}
+          <button class="btn btn-sm{% if action.name == 'accept' %} btn-success{% elif action.name == 'reject' %} btn-outline-danger{% elif action.name == 'cancel' %} btn-outline-secondary{% endif %}">{{ action.label }}</button>
+        </form>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </li>
+{% empty %}
+  <li class="list-group-item">Нет предложений.</li>
+{% endfor %}
+</ul>
+
+{% if is_paginated %}
+<nav class="mt-3">
+    <ul class="pagination">
+    {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a></li>{% endif %}
+    <li class="page-item disabled"><span class="page-link">Стр. {{ page_obj.number }} из {{ paginator.num_pages }}</span></li>
+    {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперёд</a></li>{% endif %}
+  </ul>
+</nav>
+{% endif %}
+{% endblock %}

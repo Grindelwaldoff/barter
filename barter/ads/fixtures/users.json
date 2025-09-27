@@ -1,0 +1,82 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "username": "u1",
+            "email": "u1@example.com",
+            "is_active": true,
+            "password": "!"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "username": "u2",
+            "email": "u2@example.com",
+            "is_active": true,
+            "password": "!"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "username": "u3",
+            "email": "u3@example.com",
+            "is_active": true,
+            "password": "!"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 4,
+        "fields": {
+            "username": "u4",
+            "email": "u4@example.com",
+            "is_active": true,
+            "password": "!"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 5,
+        "fields": {
+            "username": "u5",
+            "email": "u5@example.com",
+            "is_active": true,
+            "password": "!"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 6,
+        "fields": {
+            "username": "u6",
+            "email": "u6@example.com",
+            "is_active": true,
+            "password": "!"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 7,
+        "fields": {
+            "username": "u7",
+            "email": "u7@example.com",
+            "is_active": true,
+            "password": "!"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 8,
+        "fields": {
+            "username": "u8",
+            "email": "u8@example.com",
+            "is_active": true,
+            "password": "!"
+        }
+    }
+]
